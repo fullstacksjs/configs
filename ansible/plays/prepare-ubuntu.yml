@@ -1,6 +1,8 @@
 - hosts : fsk
   become: true
   roles :
-    - ../roles/prepare-ubuntu
+    # - ../roles/prepare-ubuntu
+    - ../roles/amupxm-xyzz
   vars_files :
     - ../vars.yml
+  

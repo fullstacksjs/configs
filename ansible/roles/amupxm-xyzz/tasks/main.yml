@@ -1,0 +1,25 @@
+---
+# tasks file for amupxm-xyzz
+- name: create amupxm website directory
+  file:
+    path: /root/amupxm-website
+    state: directory
+- name: template amupxm website
+  template:
+    src: ../templates/docker-compose.yml
+    dest: /root/amupxm-website/docker-compose.yml
+- name: run amupxm website
+  docker_compose:
+    project_src: /root/amupxm-website
+  register: output
+- name: template nginx.conf to server
+  template:
+    src: ../templates/nginx.conf
+    dest: /etc/nginx/sites-available/amupxm-website
+- name: activate website
+  shell: |
+    rm -rf /etc/nginx/sites-enabled/amupxm-website
+    ln -s /etc/nginx/sites-available/amupxm-website /etc/nginx/sites-enabled/amupxm-website
+- name: nginx reload signal
+  shell: |
+    nginx -s reload
