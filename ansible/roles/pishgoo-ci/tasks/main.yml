@@ -1,2 +1,23 @@
 ---
 # tasks file for pishgoo-ci
+- name: create pishgoo-ci dir
+  file:
+    path: /root/pishgoo-runner
+    state: directory
+- name: run and download github actions runner
+  get_url:
+    url: https://github.com/actions/runner/releases/download/v2.278.0/actions-runner-linux-x64-2.278.0.tar.gz
+    dest: /root/pishgoo-runner
+- name: extract files from github runner tar file to a dir 
+  shell: |
+    tar xzf /root/pishgoo-runner/actions-runner-linux-x64-2.278.0.tar.gz --directory /root/pishgoo-runner
+- name: run configuration 
+  shell: |
+    export RUNNER_ALLOW_RUNASROOT=1
+    "echo "runner\n\nY\n\n" |  /root/pishgoo-runner/config.sh --url  https://github.com/mhmda-83/pishgoo  --token ALATRL2CLQVCSS555CRSL7TARENB6 "
+- name : run the runner 
+  shell : |
+    export RUNNER_ALLOW_RUNASROOT=1
+    /root/pishgoo-runner/svc.sh install
+    /root/pishgoo-runner/svc.sh start
+    /root/pishgoo-runner/run.sh &

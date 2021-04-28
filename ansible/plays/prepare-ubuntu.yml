@@ -2,7 +2,9 @@
   become: true
   roles :
     # - ../roles/prepare-ubuntu
-    - ../roles/amupxm-xyzz
+    # - ../roles/amupxm-xyzz
+    - ../roles/pishgoo-ci
+    
   vars_files :
     - ../vars.yml
   
