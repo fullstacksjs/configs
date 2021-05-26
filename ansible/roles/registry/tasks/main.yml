@@ -1,0 +1,45 @@
+---
+# tasks file for registry
+- name: install apache2 htpasswd
+  apt:
+    pkg:
+      - apache2-utils
+    state: latest
+- name : ensure registry dir exist
+  file:
+    path: /docker-registry
+    state: directory
+- name : install python passlib
+  pip : 
+    name: passlib
+- name : ensure auth dir exist
+  file:
+    path: /root/docker-registry/auth
+    state: directory
+- name : generate admin pass htpasswd -Bc registry.password username
+  htpasswd:
+    path: /docker-registry/auth/passwdfile
+    name: "{{REGISTRY_USERNAME}}"
+    password: "{{REGISTRY_PASSWORD}}"
+    owner: root
+    group: www-data
+    mode: 0640
+- name: template compose
+  template:
+    src: ../templates/docker-compose.yml
+    dest: /root/docker-registry/docker-compose.yml
+- name: template nginx.conf to server
+  template:
+    src: ../templates/nginx.conf
+    dest: /etc/nginx/sites-available/registry-service
+- name: run registry
+  docker_compose:
+    project_src: /root/docker-registry
+  register: output
+- name: activate website
+  shell: |
+    rm -rf /etc/nginx/sites-enabled/registry-service
+    ln -s /etc/nginx/sites-available/registry-service /etc/nginx/sites-enabled/registry-service
+- name: nginx reload signal
+  shell: |
+    nginx -s reload

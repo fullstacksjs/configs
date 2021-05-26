@@ -1,4 +1,7 @@
-DOCKER_USERNAME: =)
-DOCKER_PASS: =)
-CI_CODE: =)
-CI_PATH: =)
+DOCKER_USERNAME: your value here
+DOCKER_PASS: your value here
+CI_CODE: your value here
+CI_PATH: your value here
+CI_NAME: your value here
+REGISTRY_USERNAME: your value here
+REGISTRY_PASSWORD: your value here

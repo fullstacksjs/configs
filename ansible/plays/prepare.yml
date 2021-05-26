@@ -3,7 +3,8 @@
   roles :
     # - ../roles/prepare-ubuntu
     # - ../roles/amupxm-xyzz
-    - ../roles/pishgoo-ci
+    - ../roles/registry
+    # - ../roles/pishgoo-ci
     
   vars_files :
     - ../vars.yml

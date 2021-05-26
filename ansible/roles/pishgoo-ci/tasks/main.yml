@@ -13,8 +13,7 @@
     tar xzf /root/pishgoo-runner/actions-runner-linux-x64-2.278.0.tar.gz --directory /root/pishgoo-runner
 - name: run configuration 
   shell: |
-    export RUNNER_ALLOW_RUNASROOT=1
-    "echo "runner\n\nY\n\n" |  /root/pishgoo-runner/config.sh --url  https://github.com/mhmda-83/pishgoo  --token ALATRL2CLQVCSS555CRSL7TARENB6 "
+    "export RUNNER_ALLOW_RUNASROOT=1 ;echo "runner\n\nY\n\n" |  /root/pishgoo-runner/config.sh --url  {{CI_PATH}}  --token {{CI_CODE}} "
 - name : run the runner 
   shell : |
     export RUNNER_ALLOW_RUNASROOT=1
